@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Limelight.LedMode;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,17 +19,32 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  public static RobotContainer m_robotContainer;
+  public static Limelight limelight;
+  public static Shooter shooter;
 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  @Override
-  public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
+  public Robot() {
+    super(0.02); // 0.02 - 50Hz run rate | 0.0167 - 60Hz run rate | 0.01429 - 100Hz run rate
+    limelight = new Limelight();
+
+    // Subsystems
+    shooter = new Shooter();
     m_robotContainer = new RobotContainer();
+  }
+  
+
+  /**
+   * This function is run when the robot is first started up and should be used for any
+   * initialization code.
+   */
+
+  public void robotInit() {
+    limelight.setLightMode(LedMode.OFF);
+    // intake.m_intakeDropMotor.getEncoder().setPosition(0.0);
   }
 
   /**

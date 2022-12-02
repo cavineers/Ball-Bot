@@ -1,14 +1,26 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+import frc.lib.ShooterTargeting;
 import frc.robot.Constants;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
+import com.revrobotics.SparkMaxPIDController;
 
-public class Shooter {
+public class Shooter extends SubsystemBase {
+    
     private boolean isPositioned = false;
+
+    public CANSparkMax m_shooterMotor = new CANSparkMax(Constants.Shooter.ShooterMotor, MotorType.kBrushless);
+
+    public CANSparkMax m_shooterAngleMotor = new CANSparkMax(Constants.Shooter.ShooterAngle, MotorType.kBrushless);
+
+    private CANSparkMax m_shooterFeeder = new CANSparkMax(Constants.Shooter.ShooterFeeder, MotorType.kBrushless);
 
     //When the button is pressed, the shooter will turn to the correct angle
     //Then the flywheel will go to the correct speed

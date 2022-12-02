@@ -2,11 +2,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.lib.ShooterTargeting;
+import frc.robot.Limelight;
 import frc.robot.Robot;
+import frc.robot.Limelight.LedMode;
 import frc.robot.subsystems.Shooter;
 
-public class Shoot {
-    
+public class AutoShoot extends CommandBase {
+
     private Shooter shooter;
     private Limelight limelight;
 
@@ -19,7 +22,7 @@ public class Shoot {
     private boolean m_finished = false;
     private boolean setEndTimer = false;
 
-    public Shoot(Shooter shoot, Limelight limelight) {
+    public AutoShoot(Shooter shoot, Limelight limelight) {
         // Add requirements for shooter and limelight systems
         this.addRequirements(Robot.shooter);
         this.shooter = shoot;

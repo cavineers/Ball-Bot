@@ -52,6 +52,15 @@ public final class Constants {
         // Left to wall => 1.51 inches
         // Distance between => 5.07 inches
     }
+    public static class Targeting {
+        public static double kFieldGoalHeightFromGroundIn = 103; // Math constants 104
+        public static double kLimelightHeightFromGroundIn = 23.6; // vertical distance from limelight to ground
+    
+        public static double kFieldGoalHeightFromGround = Units.inchesToMeters(kFieldGoalHeightFromGroundIn); // Math constants
+        public static double kLimelightHeightFromGround = Units.inchesToMeters(kLimelightHeightFromGroundIn); // vertical distance from limelight to ground
+        public static double kLimelightMountingAngle    = 32.8;
+    }
+    
     public static class DIO {
         public static int IntakeSensor = 0;
         public static int ElevatorSwitchRight = 1;

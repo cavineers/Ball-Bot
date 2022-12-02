@@ -5,10 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.AutoShoot;
+import frc.robot.commands.homing.HomeShooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,15 +21,42 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+  public Command m_autoCommand;
+ 
+  public Command m_autoShoot;
+  public Command m_autoShootNoDrive;
+  public Command m_manualShoot;
+  public Command m_intakeDropLower;
+  public Command m_intakeDropRaise;
+  public Command m_intake;
+  public Command homeOnAngle;
+
+  public Joystick joy = new Joystick(0);
+  public JoystickButton a_button = new JoystickButton(joy, 1);
+  public JoystickButton b_button = new JoystickButton(joy, 2);
+  public JoystickButton x_button = new JoystickButton(joy, 3);
+  public JoystickButton y_button = new JoystickButton(joy, 4);
+  public JoystickButton l_bump = new JoystickButton(joy, 5);
+  public JoystickButton r_bump = new JoystickButton(joy, 6);
+  public JoystickButton left_menu = new JoystickButton(joy, 7);
+  public JoystickButton right_menu = new JoystickButton(joy, 8);
+  public JoystickButton left_stick = new JoystickButton(joy, 9);
+  public JoystickButton right_stick = new JoystickButton(joy, 10);
+
+  public POVButton povUp = new POVButton(joy, 0, 0);
+  public POVButton povRight = new POVButton(joy, 90, 0);
+  public POVButton povDown = new POVButton(joy, 180, 0);
+  public POVButton povLeft = new POVButton(joy, 270, 0); 
   
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public enum CurrentMode {DRIVE}
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  public CurrentMode mode = CurrentMode.DRIVE; 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    this.m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
     configureButtonBindings();
   }
 
@@ -35,7 +66,22 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+
+    this.a_button.whenPressed(new InstantCommand() {
+      @Override
+      public void initialize() {
+        // Test this!
+        // m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
+        if (m_autoShoot.isScheduled()) {
+          m_autoShoot.cancel();
+        } else {
+          m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
+          m_autoShoot.schedule(false);
+        }
+      }
+    });
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
