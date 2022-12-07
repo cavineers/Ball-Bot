@@ -46,9 +46,9 @@ public class AutoShoot extends CommandBase {
         // Adjusts for X offset and turns robot automatically to align with tape
         if (this.shooter.withinXTolerance() == false && this.limelight.validTargets() == true) {
             if (ShooterTargeting.getTx() > 0) {
-                Robot.m_robotContainer.drivetrain.drive(-1.0, 0, 1.0);
+                Robot.m_robotContainer.drivetrain.driveCartesian(-1.0, 0, 1.0);
             } else {
-                Robot.m_robotContainer.drivetrain.drive(1.0, 0, -1.0);
+                Robot.m_robotContainer.drivetrain.driveCartesian(1.0, 0, -1.0);
             }
         }
 

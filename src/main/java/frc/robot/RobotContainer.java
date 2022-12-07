@@ -23,7 +23,7 @@ import frc.robot.subsystems.DriveTrain;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  public DriveTrain drivetrain = new DriveTrain(this.joy);
+  public DriveTrain drivetrain = new DriveTrain(null, null, null, null);
 
   public Command m_autoCommand;
  
@@ -60,8 +60,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     this.m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
-    configureButtonBindings();
-  }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -69,7 +67,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
 
     this.a_button.whenPressed(new InstantCommand() {
       @Override
