@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commands.AutoShoot;
 import frc.robot.commands.homing.HomeShooter;
+import frc.robot.commands.shooter.AutoShoot;
+import frc.robot.commands.shooter.ManualShoot;
+import frc.robot.subsystems.DriveTrain;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,6 +23,7 @@ import frc.robot.commands.homing.HomeShooter;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public DriveTrain drivetrain = new DriveTrain(this.joy);
 
   public Command m_autoCommand;
  
@@ -80,7 +83,18 @@ public class RobotContainer {
           m_autoShoot.schedule(false);
         }
       }
-    });
+      });
+    this.y_button.whenPressed(new InstantCommand() {
+      @Override
+      public void initialize() {
+        if (m_manualShoot.isScheduled()) {
+          m_manualShoot.cancel();
+        } else {
+          m_manualShoot = new ManualShoot(Robot.shooter).andThen(new HomeShooter());
+          m_manualShoot.schedule(false);
+        }
+       }
+      });
   }
 
   /**

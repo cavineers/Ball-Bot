@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -42,14 +42,13 @@ public class AutoShoot extends CommandBase {
         this.limelight.setLightMode(LedMode.ON);
     }
 
-    @Override
-    public void execute() {
+    public void execute(double drive, double steer, double turnInPlace) {
         // Adjusts for X offset and turns robot automatically to align with tape
         if (this.shooter.withinXTolerance() == false && this.limelight.validTargets() == true) {
             if (ShooterTargeting.getTx() > 0) {
-                Robot.m_robotContainer.drivetrain.drive(-0.1, 0, true);
+                Robot.m_robotContainer.drivetrain.drive(-1.0, 0, 1.0);
             } else {
-                Robot.m_robotContainer.drivetrain.drive(0.1, 0, true);
+                Robot.m_robotContainer.drivetrain.drive(1.0, 0, -1.0);
             }
         }
 

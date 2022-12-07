@@ -22,6 +22,18 @@ public final class Constants {
         public static int ShooterMotor          = 13;  // FlyWheel (neo)
     }
 
+    public static class DriveTrain {
+        public static int kFrontLeftChannel;
+        public static int kFrontRightChannel;
+        public static int kBackLeftChannel;
+        public static int kBackRightChannel;
+    }
+
+    public static class getChannel{
+
+    }
+    
+
     public static class Shooter {
         public static double shooterVelocityConstant = 0;
         public static int ShooterMotor = CANIds.ShooterMotor;
