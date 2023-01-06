@@ -17,6 +17,8 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
 
     public static class CANIds {
+        public static int IntakeMotor           = 0;
+        public static int IntakeMotorDrop       = 1;
         public static int ShooterAngle          = 11;  // ShooterAngle(neo)
         public static int ShooterFeeder         = 12;  // FeederWheel (minineo)
         public static int ShooterMotor          = 13;  // FlyWheel (neo)
@@ -33,7 +35,16 @@ public final class Constants {
 
     }
     
+    public static class Intake {
+        public static int IntakeID = CANIds.IntakeMotor;
+        public static int IntakeDropID = CANIds.IntakeMotorDrop;
 
+        public static double CloseSpeed = -0.2;
+        public static double OpenSpeed = 0.2;
+
+        public static double RevolutionsToLower = -31;
+    }
+    
     public static class Shooter {
         public static double shooterVelocityConstant = 0;
         public static int ShooterMotor = CANIds.ShooterMotor;

@@ -4,17 +4,17 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.ToggleIntake;
 import frc.robot.commands.homing.HomeShooter;
 import frc.robot.commands.shooter.AutoShoot;
 import frc.robot.commands.shooter.ManualShoot;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake.IntakeDoorState;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -60,7 +60,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     this.m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
-
+    this.m_intake = new ToggleIntake();
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -68,32 +68,39 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
-    this.a_button.whenPressed(new InstantCommand() {
-      @Override
-      public void initialize() {
-        // Test this!
-        // m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
-        if (m_autoShoot.isScheduled()) {
-          m_autoShoot.cancel();
-        } else {
-          m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
-          m_autoShoot.schedule(false);
-        }
-      }
-      });
-    this.y_button.whenPressed(new InstantCommand() {
-      @Override
-      public void initialize() {
-        if (m_manualShoot.isScheduled()) {
-          m_manualShoot.cancel();
-        } else {
-          m_manualShoot = new ManualShoot(Robot.shooter).andThen(new HomeShooter());
-          m_manualShoot.schedule(false);
-        }
-       }
-      });
   }
-
+  public void ConfigureButtonBindings() {
+  this.a_button.whenPressed(new InstantCommand() {
+    @Override
+    public void initialize() {
+      // Test this!
+      // m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
+      if (m_autoShoot.isScheduled()) {
+        m_autoShoot.cancel();
+      } else {
+        m_autoShoot = new AutoShoot(Robot.shooter, Robot.limelight).andThen(new HomeShooter());
+        m_autoShoot.schedule(false);
+      }
+    }
+    });
+  this.y_button.whenPressed(new InstantCommand() {
+    @Override
+    public void initialize() {
+      if (m_manualShoot.isScheduled()) {
+        m_manualShoot.cancel();
+      } else {
+        m_manualShoot = new ManualShoot(Robot.shooter).andThen(new HomeShooter());
+        m_manualShoot.schedule(false);
+      }
+     }
+    });
+    this.r_bump.whenPressed(new InstantCommand() {
+      @Override
+      public void initialize() {
+        
+      }
+    });
+   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
